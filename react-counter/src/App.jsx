@@ -16,6 +16,22 @@ function App() {
     localStorage.setItem('count', count)
   }, [count])
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowUp') {
+        increment()
+      } else if (event.key === 'ArrowDown') {
+        decrement()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [count, history])
+
   const increment = () => {
     const newCount = count + 1
     setCount(newCount)
@@ -47,6 +63,7 @@ function App() {
           ))}
         </ul>
       </div>
+      <p className="keyboard-hint">Use ArrowUp to increment and ArrowDown to decrement.</p>
     </div>
   )
 }
