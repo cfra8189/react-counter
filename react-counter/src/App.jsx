@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
   const [history, setHistory] = useState([0])
+  const [step, setStep] = useState(1)
 
   useEffect(() => {
     const savedCount = localStorage.getItem('count')
@@ -33,13 +34,13 @@ function App() {
   }, [count, history])
 
   const increment = () => {
-    const newCount = count + 1
+    const newCount = count + step
     setCount(newCount)
     setHistory([...history, newCount])
   }
 
   const decrement = () => {
-    const newCount = count - 1
+    const newCount = count - step
     setCount(newCount)
     setHistory([...history, newCount])
   }
@@ -59,6 +60,15 @@ function App() {
         <button onClick={decrement}>Decrement</button>
         <button onClick={increment}>Increment</button>
         <button onClick={reset}>Reset</button>
+      </div>
+      <div className="step-input-section">
+        <label htmlFor="step">Step Value:</label>
+        <input 
+          id="step"
+          type="number" 
+          value={step} 
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
       </div>
       <p className="save-status">Changes saved.</p>
       <div className="history-section">
