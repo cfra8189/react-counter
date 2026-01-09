@@ -1,9 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
   const [history, setHistory] = useState([0])
+
+  useEffect(() => {
+    const savedCount = localStorage.getItem('count')
+    if (savedCount !== null) {
+      setCount(Number(savedCount))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('count', count)
+  }, [count])
 
   const increment = () => {
     const newCount = count + 1
@@ -27,6 +38,7 @@ function App() {
         <button onClick={decrement}>Decrement</button>
         <button onClick={increment}>Increment</button>
       </div>
+      <p className="save-status">Changes saved.</p>
       <div className="history-section">
         <h3>Count History:</h3>
         <ul className="history-list">
